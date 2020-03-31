@@ -15,10 +15,6 @@
                     @endif
 
                     You are logged in!
-
-                    @if(Auth::check() && Auth::user()->role == "admin")
-                       <br>You are an Admin
-                    @endif
                 </div>
             </div>
         </div>

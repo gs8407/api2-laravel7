@@ -22,3 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/eula', 'EulaController@index')->name('eula');
 Route::put('/eula', 'EulaController@store')->name('eula');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

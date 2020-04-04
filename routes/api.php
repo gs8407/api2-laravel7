@@ -25,5 +25,6 @@ Route::post('/password/reset', 'API\ResetPasswordController@reset');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/SafetyAndSecurity', 'API\SafetyAndSecurityController@show');
     Route::get('/Eula', 'API\EulaController@show');
+    Route::put('/Eula', 'API\EulaController@update');
     Route::get('/UserInfo', 'API\UserInfoController@show');
 });

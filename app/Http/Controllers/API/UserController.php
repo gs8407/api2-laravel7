@@ -37,7 +37,7 @@ public $successStatus = 200;
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
-            'c_password' => 'required|same:password',
+            // 'c_password' => 'required|same:password',
         ]);
 if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);

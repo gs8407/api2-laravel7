@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f990f5e06b9c3d6763a6831231e1770",
+    "content-hash": "4c313df9f0b8f97702a2c3d599beb6d3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -841,6 +841,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -887,6 +888,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
@@ -1059,7 +1061,7 @@
                 "symfony/console": "^5.0",
                 "symfony/error-handler": "^5.0",
                 "symfony/finder": "^5.0",
-                "symfony/http-foundation": "^5.0.7",
+                "symfony/http-foundation": "^5.0",
                 "symfony/http-kernel": "^5.0",
                 "symfony/mime": "^5.0",
                 "symfony/process": "^5.0",

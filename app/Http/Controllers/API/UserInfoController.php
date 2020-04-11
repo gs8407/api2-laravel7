@@ -7,5 +7,7 @@ use Illuminate\Http\Request;
 
 class UserInfoController extends Controller
 {
-    //
+    public function show() {
+        return "Test";
+}
 }

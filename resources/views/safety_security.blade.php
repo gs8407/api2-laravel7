@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Eula</div>
+                <div class="card-header">Safety And Security</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,11 +14,11 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <form class="col-md-12" action="/eula" method="POST">
+                    <form class="col-md-12" action="/safety-security" method="POST">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="form-group">
-                            <textarea type="text" class="form-control input-lg" id="eula" placeholder="Text Here" name="body">{{ $eula->body  ?? '' }}</textarea>
+                            <textarea type="text" class="form-control input-lg" id="eula" placeholder="Text Here" name="body">{{ $safety_security->body ?? '' }}</textarea>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-lg btn-block" type="submit" value="Edit">Update</button>

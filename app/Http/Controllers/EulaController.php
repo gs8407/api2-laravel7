@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use DB;
@@ -8,7 +9,7 @@ use DB;
 class EulaController extends Controller
 {
     /**
-     * safety and security api index
+     * Eula api index
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,15 +20,15 @@ class EulaController extends Controller
     }
 
     /**
-     * safety and security api store
+     * Eula api store
      *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $content = $request->content;
+        $body = $request->body;
 
-        DB::table('eula')->update(['content' => $content]);
+        DB::table('eula')->update(['body' => $body, 'updated_at' => \Carbon\Carbon::now()]);
 
         $eula = DB::table('eula')->first();
         return view('eula', compact('eula'));

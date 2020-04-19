@@ -19,10 +19,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/eula', 'EulaController@index')->name('eula');
 Route::put('/eula', 'EulaController@store')->name('eula');
 
-Auth::routes();
+Route::get('/safety-security', 'SafetySecurityController@index')->name('safety_security');
+Route::put('/safety-security', 'SafetySecurityController@store')->name('safety_security');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/required-version', 'RequiredAppVersionController@index')->name('required_version');
+Route::put('/required-version', 'RequiredAppVersionController@store')->name('required_version');
+
+Auth::routes();

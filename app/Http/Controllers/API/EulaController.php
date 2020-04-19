@@ -9,27 +9,34 @@ use Illuminate\Http\Request;
 class EulaController extends Controller
 {
     /**
-     * safety and security api show
+     * Eula api show
      *
      * @return \Illuminate\Http\Response
-     */
+     **/
+
     public function show()
     {
         $eula = DB::table('eula')->first();
-        return $eula->content;
+        return $eula->body;
     }
+
+    /**
+     * Eula api update
+     *
+     * @return \Illuminate\Http\Response
+     **/
 
     public function update(Request $request)
     {
-        $content = $request->content;
+        $body = $request->body;
 
-        //DB::update('update eula where id = 1 set content = $content' );
+        //DB::update('update eula where id = 1 set body = $body' );
 
         DB::table('eula')
             ->where('id', 1)
-            ->update(['content' => $content]);
+            ->update(['body' => $body, 'updated_at' => \Carbon\Carbon::now()]);
 
-            return response(['message' => 'Eula content is updated!']);
+        return response(['message' => 'Eula content is updated!']);
 
     }
 }

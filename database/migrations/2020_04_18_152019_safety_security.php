@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Eula extends Migration
+class SafetySecurity extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class Eula extends Migration
      */
     public function up()
     {
-        Schema::create('eula', function (Blueprint $table) {
+        Schema::create('safety_security', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('body');
             $table->timestamps();
         });
 
-        DB::table('eula')->insert(
+        DB::table('safety_security')->insert(
             array(
                 'body' => '<p></p>',
                 "created_at" =>  \Carbon\Carbon::now(),
@@ -35,6 +35,6 @@ class Eula extends Migration
      */
     public function down()
     {
-        Schema::drop('eula');
+        Schema::drop('safety_security');
     }
 }

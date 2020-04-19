@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Eula</div>
+                <div class="card-header">Required App Version</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,11 +14,14 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <form class="col-md-12" action="/eula" method="POST">
+                    <form class="col-md-12" action="/required-version" method="POST">
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="form-group">
-                            <textarea type="text" class="form-control input-lg" id="eula" placeholder="Text Here" name="body">{{ $eula->body  ?? '' }}</textarea>
+                            <label for="">Required Version</label>
+                            <input type="text" class="form-control input-lg" id="requiredVersion"  name="requiredVersion" value="{{ $required_version->requiredVersion ?? '' }}">
+                            <label for="">Recommended Version</label>
+                            <input type="text" class="form-control input-lg" id="requiredVersion"  name="recommendedVersion" value="{{ $required_version->recommendedVersion ?? '' }}">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-lg btn-block" type="submit" value="Edit">Update</button>

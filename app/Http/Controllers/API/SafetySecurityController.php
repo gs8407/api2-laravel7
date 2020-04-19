@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 
 class SafetySecurityController extends Controller
 {
-    public function show() {
-        return "Safety";
+    /**
+     * safety and security api show
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        $safety_security = DB::table('safety_security')->first();
+        return $safety_security->body;
     }
 }

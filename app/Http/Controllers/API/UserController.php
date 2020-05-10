@@ -4,12 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\User;
-use Validator;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\Client as OClient;
+use Validator;
+use DB;
 
 class UserController extends Controller
 {
@@ -22,11 +23,12 @@ class UserController extends Controller
      */
     public function login()
     {
+
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $oClient = OClient::where('password_client', 1)->first();
             return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'));
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Wrong email or password.'], 401);
         }
     }
 
@@ -37,11 +39,15 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
+        $messages = [
+            'email.unique' => 'The email has already been used.',
+        ];
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-        ]);
+        ], $messages);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
@@ -60,7 +66,7 @@ class UserController extends Controller
     {
         $oClient = OClient::where('password_client', 1)->first();
         $http = new Client;
-        $response = $http->request('POST', env('APP_URL','default_value') . '/oauth/token', [
+        $response = $http->request('POST', env('APP_URL', 'default_value') . '/oauth/token', [
             'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => $oClient->id,
@@ -71,7 +77,7 @@ class UserController extends Controller
             ],
         ]);
 
-        $result = json_decode((string)$response->getBody(), true);
+        $result = json_decode((string) $response->getBody(), true);
         return response()->json($result, $this->successStatus);
     }
 
@@ -85,13 +91,13 @@ class UserController extends Controller
     {
         $request->user()->token()->revoke();
         return response()->json([
-            'message' => 'Successfully logged out'
+            'message' => 'Successfully logged out',
         ]);
     }
 
     public function unauthorized()
     {
-        return response()->json("unauthorized", 401);
+        return response()->json(['error' => 'Unauthorized.'], 401);
     }
 
     public function refreshToken(Request $request)
@@ -101,7 +107,7 @@ class UserController extends Controller
         $http = new Client;
 
         try {
-            $response = $http->request('POST', env('APP_URL','default_value') . '/oauth/token', [
+            $response = $http->request('POST', env('APP_URL', 'default_value') . '/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'refresh_token',
                     'refresh_token' => $refresh_token,
@@ -110,15 +116,15 @@ class UserController extends Controller
                     'scope' => '',
                 ],
             ]);
-            return json_decode((string)$response->getBody(), true);
+            return json_decode((string) $response->getBody(), true);
         } catch (Exception $e) {
-            //return response()->json(['error' => 'Bad refresh token'], 401);
-            return $e->getResponse();
+            return response()->json(['error' => ['refresh_token' => 'The refresh token is invalid.']], 401);
+            // return $e->getResponse();
         }
     }
 
     /**
-     * Register api
+     * Register Subuser api
      *
      * @return \Illuminate\Http\Response
      */
@@ -126,8 +132,8 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -141,10 +147,8 @@ class UserController extends Controller
         $input['parent'] = Auth::user()->id;
         $user = User::create($input);
         $oClient = OClient::where('password_client', 1)->first();
-        // return $this->getTokenAndRefreshToken($oClient, $user->email, $password);
-        return response()->json([
-            'message' => 'Successfully created Subuser'
-        ]);
+        return response()->json(['success' => 'Successfully created subuser.'], 200);
+
     }
 
     /**
@@ -155,7 +159,6 @@ class UserController extends Controller
     public function showSubUsers(Request $request)
     {
         $parent = Auth::user()->id;
-        //$subUsers = \App\User::where('parent', $parent);
 
         $subUsers = User::where(['parent' => Auth::user()->id])->get();
 
@@ -169,16 +172,36 @@ class UserController extends Controller
      */
     public function deleteSubUser(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'subuser' => 'required',
+        ]);
+
         $parent = Auth::user()->id;
 
         $subUsers = User::where(['parent' => Auth::user()->id, 'id' => $request->subuser])->delete();
 
-        $message = "Successfully deleted Subuser " . $request->subuser;
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
 
         return response()->json([
-            'message' => $message
+            'success' => "Successfully deleted subuser",
+            'id' => $request->subuser,
         ]);
     }
 
+    public function getToys()
+    {
+        $role = Auth::user()->role;
+        if ($role == 'user' ) {
+            $user = \App\User::find(auth()->id());
+        }
+        elseif ($role == 'subuser') {
+            $user = \App\User::find(Auth::user()->parent);
+        }
 
+        $get = $user->toys;
+        return $get;
+
+    }
 }

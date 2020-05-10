@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', 'API\UserController@login');
@@ -9,9 +8,9 @@ Route::post('/refreshtoken', 'API\UserController@refreshToken');
 Route::post('/password/email', 'API\ForgotPasswordController@sendResetLinkEmail');
 Route::post('/password/reset', 'API\ResetPasswordController@reset');
 
-Route::get('unauthorized', 'API\UserController@unauthorized');
+Route::get('/unauthorized', 'API\UserController@unauthorized');
 
-Route::group(['middleware' => ['auth:api']], function() {
+Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/SubUser', 'API\UserController@registerSubUser');
     Route::delete('/SubUser', 'API\UserController@deleteSubUser');
     Route::get('/SubUser', 'API\UserController@showSubUsers');
@@ -22,4 +21,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/Eula', 'API\EulaController@show');
     Route::put('/Eula', 'API\EulaController@update');
     Route::get('/UserInfo', 'API\UserInfoController@show');
+
+    Route::post('/ToyInitalize', 'API\ToyController@create');
+    Route::get('/MyToys', 'API\UserController@getToys');
 });

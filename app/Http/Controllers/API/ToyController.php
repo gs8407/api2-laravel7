@@ -32,12 +32,10 @@ class ToyController extends Controller
 
         $messages = [
             'toy_id.unique' => 'The toy_id has already been taken.',
-            'toy_serial.unique' => 'The toy_serial has already been taken.',
         ];
 
         $validator = Validator::make($request->all(), [
             'toy_id' => 'unique:toys',
-            'toy_serial' => 'unique:toys',
         ], $messages);
 
         if ($validator->fails()) {
@@ -49,7 +47,6 @@ class ToyController extends Controller
         $toy = new Toy;
         $toy->user_id = $user_id;
         $toy->toy_id = $request->toy_id;
-        $toy->toy_serial = $request->toy_serial;
         $toy->created_at = \Carbon\Carbon::now();
         $toy->updated_at = \Carbon\Carbon::now();
 

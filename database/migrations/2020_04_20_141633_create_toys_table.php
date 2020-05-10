@@ -17,7 +17,6 @@ class CreateToysTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->text('toy_id');
-            $table->text('toy_serial');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
         });

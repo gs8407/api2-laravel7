@@ -18,10 +18,16 @@
                         {{ method_field('PUT') }}
                         @csrf
                         <div class="form-group">
-                            <label for="">Required Version</label>
-                            <input type="text" class="form-control input-lg" id="requiredVersion"  name="requiredVersion" value="{{ $required_version->requiredVersion ?? '' }}">
+                            <label for="">Required Version iOS</label>
+                            <input type="text" class="form-control input-lg" id="requiredVersionIOS"  name="requiredVersionIOS" value="{{ $required_version->requiredVersionIOS ?? '' }}">
                             <label for="">Recommended Version</label>
-                            <input type="text" class="form-control input-lg" id="requiredVersion"  name="recommendedVersion" value="{{ $required_version->recommendedVersion ?? '' }}">
+                            <input type="text" class="form-control input-lg" id="requiredVersionIOS"  name="recommendedVersionIOS" value="{{ $required_version->recommendedVersionIOS ?? '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Required Version Android</label>
+                            <input type="text" class="form-control input-lg" id="requiredVersionAndroid"  name="requiredVersionAndroid" value="{{ $required_version->requiredVersionAndroid ?? '' }}">
+                            <label for="">Recommended Version</label>
+                            <input type="text" class="form-control input-lg" id="requiredVersionAndroid"  name="recommendedVersionAndroid" value="{{ $required_version->recommendedVersionAndroid ?? '' }}">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-lg btn-block" type="submit" value="Edit">Update</button>

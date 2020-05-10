@@ -15,15 +15,19 @@ class ReqiredVersion extends Migration
     {
         Schema::create('required_version', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('requiredVersion')->nullable();
-            $table->text('recommendedVersion')->nullable();
+            $table->text('requiredVersionIOS')->nullable();
+            $table->text('recommendedVersionIOS')->nullable();
+            $table->text('requiredVersionAndroid')->nullable();
+            $table->text('recommendedVersionAndroid')->nullable();
             $table->timestamps();
         });
 
         DB::table('required_version')->insert(
             array(
-                'requiredVersion' => '',
-                'recommendedVersion' => '',
+                'requiredVersionIOS' => '',
+                'recommendedVersionIOS' => '',
+                'requiredVersionAndroid' => '',
+                'recommendedVersionAndroid' => '',
                 'created_at' =>  \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             )

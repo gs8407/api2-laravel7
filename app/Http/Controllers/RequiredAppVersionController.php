@@ -26,10 +26,12 @@ class RequiredAppVersionController extends Controller
      */
     public function store(Request $request)
     {
-        $recommendedVersion = $request->recommendedVersion;
-        $requiredVersion = $request->requiredVersion;
+        $recommendedVersionIOS = $request->recommendedVersionIOS;
+        $requiredVersionIOS = $request->requiredVersionIOS;
+        $recommendedVersionAndroid = $request->recommendedVersionAndroid;
+        $requiredVersionAndroid = $request->requiredVersionAndroid;
 
-        DB::table('required_version')->update(['recommendedVersion' => $recommendedVersion, 'requiredVersion' => $requiredVersion, 'updated_at' => \Carbon\Carbon::now()]);
+        DB::table('required_version')->update(['recommendedVersionIOS' => $recommendedVersionIOS, 'requiredVersionIOS' => $requiredVersionIOS,'recommendedVersionAndroid' => $recommendedVersionAndroid, 'requiredVersionAndroid' => $requiredVersionAndroid, 'updated_at' => \Carbon\Carbon::now()]);
 
         $required_version = DB::table('required_version')->first();
         return view('required_version', compact('required_version'));

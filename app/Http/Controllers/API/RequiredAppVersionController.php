@@ -17,6 +17,6 @@ class RequiredAppVersionController extends Controller
     {
         $version = DB::table('required_version')->first();
 
-        return (['requiredVersion' => $version->requiredVersion, 'recommendedVersion' => $version->recommendedVersion]);
+        return (['ios' => ['requiredVersion' => $version->requiredVersionIOS, 'recommendedVersion' => $version->recommendedVersionIOS], 'android' => ['requiredVersion' => $version->requiredVersionAndroid, 'recommendedVersion' => $version->recommendedVersionAndroid]]);
     }
 }

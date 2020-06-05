@@ -138,15 +138,18 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
-
-        $password = $request->password;
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $input['role'] = 'subuser';
-        $input['parent'] = Auth::user()->id;
-        $user = User::create($input);
-        $oClient = OClient::where('password_client', 1)->first();
-        return response()->json(['success' => 'Successfully created subuser.'], 200);
+        if($request->email == Auth::user()->email) {
+            return response()->json(['success' => 'You can\'t add yourself as a subuser.'], 401);
+        } else {
+            $password = $request->password;
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+            $input['role'] = 'subuser';
+            $input['parent'] = Auth::user()->id;
+            $user = User::create($input);
+            $oClient = OClient::where('password_client', 1)->first();
+            return response()->json(['success' => 'Successfully created subuser.'], 200);
+        }
 
     }
 

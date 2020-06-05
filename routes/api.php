@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/RequiredAppVersion', 'API\RequiredAppVersionController@show');
     Route::get('/Eula', 'API\EulaController@show');
     Route::put('/Eula', 'API\EulaController@update');
-    Route::get('/UserInfo', 'API\UserInfoController@show');
+    Route::get('/UserInfo', 'API\UserController@details');
 
     Route::post('/ToyInitalize', 'API\ToyController@create');
     Route::get('/MyToys', 'API\UserController@getToys');
